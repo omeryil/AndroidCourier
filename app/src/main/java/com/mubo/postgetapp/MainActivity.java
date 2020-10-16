@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .createPost()
-                .Process();
+                .process();
 
         JSONObject j=new JSONObject();
         try {
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .createPost()
-                .Process();
+                .process();
 
 
       new postBuilder()
@@ -75,6 +75,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .createPost()
-                .Process();
+                .process();
     }
 }

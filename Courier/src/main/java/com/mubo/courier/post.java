@@ -81,7 +81,7 @@ public class post {
         Act = act;
     }
 
-    public void Process() {
+    public void process() {
         new Thread(new Runnable() {
             @Override
             public void run() {
