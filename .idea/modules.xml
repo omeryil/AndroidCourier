@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/PostGetApp.iml" filepath="$PROJECT_DIR$/.idea/modules/PostGetApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Courier/PostGetApp.Courier.iml" filepath="$PROJECT_DIR$/.idea/modules/Courier/PostGetApp.Courier.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/PostGetApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/PostGetApp.app.iml" />
+    </modules>
+  </component>
+</project>
