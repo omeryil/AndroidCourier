@@ -1,5 +1,8 @@
 package com.mubo.courier;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class response {
     public enum HttpSuccess{
         SUCCESS,
@@ -8,17 +11,21 @@ public class response {
     private int ResponseCode;
     private String Data;
     private Object MapperData;
+    private JSONObject JsonObject;
+    private JSONArray JsonArray;
     private String ExceptionData;
     private int RequestCode;
     private HttpSuccess Result;
 
-    public response(int responseCode, String data, Object mapperData, String exceptionData, int requestCode, HttpSuccess result) {
+    public response(int responseCode, String data, Object mapperData, String exceptionData, int requestCode, HttpSuccess result,JSONObject jsonObject,JSONArray jsonArray) {
         ResponseCode = responseCode;
         Data = data;
         MapperData = mapperData;
         ExceptionData = exceptionData;
         RequestCode = requestCode;
         Result = result;
+        JsonObject=jsonObject;
+        JsonArray=jsonArray;
     }
 
     public int getResponseCode() {
@@ -43,6 +50,14 @@ public class response {
 
     public HttpSuccess getResult() {
         return Result;
+    }
+
+    public JSONArray getJsonArray() {
+        return JsonArray;
+    }
+
+    public JSONObject getJsonObject() {
+        return JsonObject;
     }
 }
 

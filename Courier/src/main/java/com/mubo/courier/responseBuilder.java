@@ -1,9 +1,14 @@
 package com.mubo.courier;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 public class responseBuilder {
     private int responseCode;
     private String jsonData;
     private Object mapperData;
+    private JSONObject jsonObject;
+    private JSONArray jsonArray;
     private String exceptionData;
     private int requestCode;
     private response.HttpSuccess result;
@@ -38,7 +43,17 @@ public class responseBuilder {
         return this;
     }
 
+    public responseBuilder setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
+        return this;
+    }
+
+    public responseBuilder setJsonArray(JSONArray jsonArray) {
+        this.jsonArray = jsonArray;
+        return this;
+    }
+
     public response createResponse() {
-        return new response(responseCode, jsonData, mapperData, exceptionData, requestCode, result);
+        return new response(responseCode, jsonData, mapperData, exceptionData, requestCode, result,jsonObject,jsonArray);
     }
 }

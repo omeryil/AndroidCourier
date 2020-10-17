@@ -7,6 +7,10 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -44,7 +48,9 @@ public class post {
 
     public enum RETURN_TYPE{
         STRING,
-        MAPPER
+        MAPPER,
+        JSONOBJECT,
+        JSONARRAY
     }
     public enum POST_TYPE{
         MULTIPART,
@@ -90,7 +96,7 @@ public class post {
                 else if(Post_type == POST_TYPE.MULTIPART){
                     MultiPost();
                 }else{
-
+                    JsonPost();
                 }
             }
         }).start();
@@ -112,7 +118,8 @@ public class post {
         response.HttpSuccess result;
         final response res;
         int serverResponseCode = -1;
-
+        JSONObject jo = null;
+        JSONArray ja = null;
         if (PostFile != null && !PostFile.isFile()) {
             result = response.HttpSuccess.FAIL;
             ExceptionData = "File not exists";
@@ -140,10 +147,17 @@ public class post {
                 if (Return_type == RETURN_TYPE.MAPPER) {
                     ObjectMapper mapper = new ObjectMapper();
                     cData = mapper.readValue(data, MapperClass);
+                }else if(Return_type == RETURN_TYPE.JSONOBJECT || Return_type == RETURN_TYPE.JSONARRAY){
+
+                    if (Return_type == RETURN_TYPE.JSONARRAY) {
+                        ja = new JSONArray(data);
+                    } else {
+                        jo = new JSONObject(data);
+                    }
                 }
                 serverResponseCode=multipart.getStatus();
                 result = response.HttpSuccess.SUCCESS;
-            } catch (IOException e) {
+            } catch (IOException | JSONException e) {
                 result = response.HttpSuccess.FAIL;
                 e.printStackTrace();
                 ExceptionData = e.getMessage();
@@ -155,6 +169,8 @@ public class post {
                 .setExceptionData(ExceptionData)
                 .setRequestCode(RequestCode)
                 .setResult(result)
+                .setJsonObject(jo)
+                .setJsonArray(ja)
                 .createResponse();
         Act.runOnUiThread(new Runnable() {
             @Override
@@ -169,6 +185,8 @@ public class post {
         int responsCode=-1;
         String data=null;
         Object cData=null;
+        JSONObject jo=null;
+        JSONArray ja=null;
         String ExceptionData=null;
         response.HttpSuccess result;
         String m = Method == REQUEST_METHODS.POST ? "POST":"GET";
@@ -198,6 +216,13 @@ public class post {
             if (Return_type == RETURN_TYPE.MAPPER) {
                 ObjectMapper mapper = new ObjectMapper();
                 cData = mapper.readValue(data, MapperClass);
+            }else if(Return_type == RETURN_TYPE.JSONOBJECT || Return_type == RETURN_TYPE.JSONARRAY){
+
+                if (Return_type == RETURN_TYPE.JSONARRAY) {
+                    ja = new JSONArray(data);
+                } else {
+                    jo = new JSONObject(data);
+                }
             }
             result = response.HttpSuccess.SUCCESS;
         } catch (Exception e) {
@@ -210,6 +235,8 @@ public class post {
                 .setExceptionData(ExceptionData)
                 .setRequestCode(RequestCode)
                 .setResult(result)
+                .setJsonObject(jo)
+                .setJsonArray(ja)
                 .createResponse();
         Act.runOnUiThread(new Runnable() {
             @Override

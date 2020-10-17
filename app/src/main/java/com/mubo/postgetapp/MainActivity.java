@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        new postBuilder()
+       /* new postBuilder()
                 .setActivity(this)
                 .setMethod(post.REQUEST_METHODS.POST)
                 .setPost_type(post.POST_TYPE.MULTIPART)
@@ -41,10 +41,10 @@ public class MainActivity extends AppCompatActivity {
             j.put("b",1);
         } catch (JSONException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
-        new postBuilder()
+       /* new postBuilder()
                 .setActivity(this)
                 .setMethod(post.REQUEST_METHODS.POST)
                 .setPost_type(post.POST_TYPE.JSON)
@@ -60,17 +60,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 })
                 .createPost()
-                .process();
+                .process();*/
 
 
       new postBuilder()
                 .setActivity(this)
                 .setMethod(post.REQUEST_METHODS.GET)
-                .setPost_type(post.POST_TYPE.JSON)
-                .setUrl("http://192.168.0.14:8189/api/")
+                .setReturn_type(post.RETURN_TYPE.JSONOBJECT)
+                .setUrl("http://192.168.0.14:8189/api/jsonobject")
                 .setCompletionHandler(new post.completionHandler() {
                     @Override
                     public void onHttpFinished(response response) {
+                        JSONObject j=response.getJsonObject();
                         Toast.makeText(MainActivity.this, response.getData(), Toast.LENGTH_SHORT).show();
                     }
                 })
