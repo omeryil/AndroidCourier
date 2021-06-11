@@ -24,24 +24,18 @@ public class MultiPartUtility {
     private OutputStream outputStream;
     private PrintWriter writer;
 
-    /**
-     * This constructor initializes a new HTTP POST request with content type
-     * is set to multipart/form-data
-     * @param requestURL
-     * @param charset
-     * @throws IOException
-     */
+    
     public MultiPartUtility(String requestURL, String charset)
             throws IOException {
         this.charset = charset;
 
-        // creates a unique boundary based on time stamp
+       
         boundary = "===" + System.currentTimeMillis() + "===";
 
         URL url = new URL(requestURL);
         httpConn = (HttpURLConnection) url.openConnection();
         httpConn.setUseCaches(false);
-        httpConn.setDoOutput(true); // indicates POST method
+        httpConn.setDoOutput(true); 
         httpConn.setDoInput(true);
         httpConn.setRequestProperty("Content-Type",
                 "multipart/form-data; boundary=" + boundary);
@@ -54,11 +48,7 @@ public class MultiPartUtility {
     public void setToken(String Token){
         httpConn.setRequestProperty("Authorization", Token);
     }
-    /**
-     * Adds a form field to the request
-     * @param name field name
-     * @param value field value
-     */
+    
     public void addFormField(String name, String value) {
         writer.append("--" + boundary).append(LINE_FEED);
         writer.append("Content-Disposition: form-data; name=\"" + name + "\"")
@@ -70,12 +60,7 @@ public class MultiPartUtility {
         writer.flush();
     }
 
-    /**
-     * Adds a upload file section to the request
-     * @param fieldName name attribute in <input type="file" name="..." />
-     * @param uploadFile a File to be uploaded
-     * @throws IOException
-     */
+    
     public void addFilePart(String fieldName, File uploadFile)
             throws IOException {
         String fileName = uploadFile.getName();
@@ -105,58 +90,13 @@ public class MultiPartUtility {
         writer.flush();
     }
 
-    /**
-     * Adds a header field to the request.
-     * @param name - name of the header field
-     * @param value - value of the header field
-     */
+  
     public void addHeaderField(String name, String value) {
         writer.append(name + ": " + value).append(LINE_FEED);
         writer.flush();
     }
 
-    /**
-     * Completes the request and receives response from the server.
-     * @return a list of Strings as response in case the server returned
-     * status OK, otherwise an exception is thrown.
-     * @throws IOException
-     */
-    /*
-    public List<String> finish() throws IOException {
-        List<String> response = new ArrayList<String>();
-
-        writer.append(LINE_FEED).flush();
-        writer.append("--" + boundary + "--").append(LINE_FEED);
-        writer.close();
-
-        // checks server's status code first
-        int status = httpConn.getResponseCode();
-        if (status == HttpURLConnection.HTTP_OK) {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(
-                    httpConn.getInputStream()));
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                response.add(line);
-            }
-            reader.close();
-            httpConn.disconnect();
-        } else {
-            throw new IOException("Server returned non-OK status: " + status);
-        }
-
-        return response;
-    }
-    */
-
-
-
-
-    /**
-     * Completes the request and receives response from the server.
-     * @return a list of Strings as response in case the server returned
-     * status OK, otherwise an exception is thrown.
-     * @throws IOException
-     */
+   
     public int getStatus(){
         return status;
     }
@@ -168,7 +108,7 @@ public class MultiPartUtility {
         writer.append("--" + boundary + "--").append(LINE_FEED);
         writer.close();
 
-        // checks server's status code first
+        
         status = httpConn.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
 
